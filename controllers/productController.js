@@ -1,41 +1,30 @@
 const searchAgent = require("../agents/searchAgent");
-const comparisonAgent = require("../agents/comparisonAgent");
 const recommendationAgent = require("../agents/recommendationAgent");
 
 exports.searchProducts = async (req, res) => {
+  try {
+    const result = await searchAgent(req.query.q);
 
-    try{
+    const recommendation = await recommendationAgent(
+      result.products
+    );
 
-        const result = await searchAgent(req.query.q);
+    res.status(200).json({
+      success: true,
+      keyword: result.keyword,
+      total: result.products.length,
+      recommendation,
+      products: result.products,
+    });
 
-        const compared = comparisonAgent(result.products);
+  } catch (error) {
 
-        const recommendation = await recommendationAgent(compared);
+    console.error(error);
 
-        res.json({
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
 
-            success:true,
-
-            keyword:result.keyword,
-
-            total:compared.length,
-
-            recommendation,
-
-            products:compared
-
-        });
-
-    }catch(error){
-
-        res.status(500).json({
-
-            success:false,
-
-            message:error.message
-
-        });
-
-    }
-
+  }
 };
