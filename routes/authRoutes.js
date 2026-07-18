@@ -1,14 +1,64 @@
 const express = require("express");
-
-const router = express.Router();
+const passport = require("passport");
 
 const {
   registerUser,
   loginUser,
 } = require("../controllers/authController");
 
-router.post("/register", registerUser);
+const generateToken = require("../utils/generateToken");
 
+const router = express.Router();
+
+// =========================
+// Normal Authentication
+// =========================
+
+router.post("/register", registerUser);
 router.post("/login", loginUser);
+
+// =========================
+// Google Login
+// =========================
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+// =========================
+// Google Callback
+// =========================
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:5173/login",
+    session: false,
+  }),
+  async (req, res) => {
+    try {
+      const token = generateToken(req.user._id);
+
+      const user = {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+      };
+
+      const encodedUser = encodeURIComponent(
+        JSON.stringify(user)
+      );
+
+      res.redirect(
+        `http://localhost:5173/auth-success?token=${token}&user=${encodedUser}`
+      );
+    } catch (err) {
+      console.error(err);
+      res.redirect("http://localhost:5173/login");
+    }
+  }
+);
 
 module.exports = router;
