@@ -1,10 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 
-const {
-  registerUser,
-  loginUser,
-} = require("../controllers/authController");
+const { registerUser, loginUser } = require("../controllers/authController");
 
 const generateToken = require("../utils/generateToken");
 
@@ -25,7 +22,7 @@ router.get(
   "/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-  })
+  }),
 );
 
 // =========================
@@ -34,7 +31,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect: "https://shopintel26.bastabsaikiabs10.workers.dev/login",
     session: false,
   }),
   async (req, res) => {
@@ -47,18 +44,16 @@ router.get(
         email: req.user.email,
       };
 
-      const encodedUser = encodeURIComponent(
-        JSON.stringify(user)
-      );
+      const encodedUser = encodeURIComponent(JSON.stringify(user));
 
       res.redirect(
-        `http://localhost:5173/auth-success?token=${token}&user=${encodedUser}`
+        `https://shopintel26.bastabsaikiabs10.workers.dev/auth-success?token=${token}&user=${encodedUser}`,
       );
     } catch (err) {
       console.error(err);
-      res.redirect("http://localhost:5173/login");
+      res.redirect("https://shopintel26.bastabsaikiabs10.workers.dev/login");
     }
-  }
+  },
 );
 
 module.exports = router;

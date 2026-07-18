@@ -15,12 +15,11 @@ passport.use(
       try {
         const email = profile.emails[0].value;
 
-        // Check user by email
+        // Check if user already exists
         let user = await User.findOne({ email });
 
-        // Existing user
         if (user) {
-          // Link Google account if not linked already
+          // Link Google account if not linked
           if (!user.googleId) {
             user.googleId = profile.id;
             user.provider = "google";
@@ -30,28 +29,31 @@ passport.use(
           return done(null, user);
         }
 
-        // New Google user
+        // Create new Google user
         user = await User.create({
           name: profile.displayName,
-          email: email,
+          email,
+          password: "",          // Required if password field exists
           googleId: profile.id,
           provider: "google",
         });
 
         return done(null, user);
+
       } catch (err) {
+        console.error("Google Strategy Error:", err);
         return done(err, null);
       }
     }
   )
 );
 
-// Serialize user
+// Serialize User
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// Deserialize user
+// Deserialize User
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
