@@ -8,7 +8,6 @@ const searchAgent = async (userQuery) => {
     try {
         keyword = await generateSearchKeyword(userQuery);
     } catch (error) {
-        console.log("Gemini unavailable, using user query...");
         keyword = userQuery;   // fallback
     }
 

@@ -2,13 +2,23 @@ const axios = require("axios");
 
 const searchProducts = async (keyword) => {
   try {
-    const response = await axios.get("https://serpapi.com/search.json", {
-      params: {
-        engine: "google_shopping",
-        q: keyword,
-        api_key: process.env.SERP_API_KEY,
-      },
-    });
+    const response = await axios.get(
+      "https://serpapi.com/search.json",
+      {
+        params: {
+          engine: "google_shopping",
+          q: keyword,
+
+          // 🇮🇳 India localization
+          location: "India",
+          google_domain: "google.co.in",
+          gl: "in",
+          hl: "en",
+
+          api_key: process.env.SERP_API_KEY,
+        },
+      }
+    );
 
     const products = response.data.shopping_results.map((item) => ({
       id: item.product_id,

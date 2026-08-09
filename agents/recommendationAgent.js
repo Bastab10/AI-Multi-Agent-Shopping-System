@@ -1,9 +1,7 @@
 const getPrice = (price) => {
   if (!price) return Number.MAX_VALUE;
 
-  return (
-    parseFloat(String(price).replace(/[^0-9.]/g, "")) || Number.MAX_VALUE
-  );
+  return parseFloat(String(price).replace(/[^0-9.]/g, "")) || Number.MAX_VALUE;
 };
 
 const recommendationAgent = async (products) => {
@@ -28,40 +26,41 @@ const recommendationAgent = async (products) => {
   }
 
   // Highest Rated Product
+  // Highest Rated Product
   const bestOverall = [...products].sort(
-    (a, b) => (b.rating || 0) - (a.rating || 0)
+    (a, b) => (b.rating || 0) - (a.rating || 0),
   )[0];
 
   // Lowest Price Product
   const bestBudget = [...products].sort(
-    (a, b) => getPrice(a.price) - getPrice(b.price)
+    (a, b) => getPrice(a.price) - getPrice(b.price),
   )[0];
 
   // Highest Price Product
   const premiumChoice = [...products].sort(
-    (a, b) => getPrice(b.price) - getPrice(a.price)
+    (a, b) => getPrice(b.price) - getPrice(a.price),
   )[0];
 
   return {
     best_overall: {
       title: bestOverall.title,
       price: bestOverall.price,
-      explanation:
-        "Highest rated product with strong customer reviews.",
+      link: bestOverall.link,
+      explanation: "Highest rated product with strong customer reviews.",
     },
 
     best_budget: {
       title: bestBudget.title,
       price: bestBudget.price,
-      explanation:
-        "Lowest priced product among the available results.",
+      link: bestBudget.link,
+      explanation: "Lowest priced product among the available results.",
     },
 
     premium_choice: {
       title: premiumChoice.title,
       price: premiumChoice.price,
-      explanation:
-        "Most premium and highest priced product in the results.",
+      link: premiumChoice.link,
+      explanation: "Most premium and highest priced product in the results.",
     },
   };
 };

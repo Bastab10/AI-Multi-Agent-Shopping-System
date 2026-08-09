@@ -5,9 +5,7 @@ exports.searchProducts = async (req, res) => {
   try {
     const result = await searchAgent(req.query.q);
 
-    const recommendation = await recommendationAgent(
-      result.products
-    );
+    const recommendation = await recommendationAgent(result.products);
 
     res.status(200).json({
       success: true,
@@ -16,15 +14,12 @@ exports.searchProducts = async (req, res) => {
       recommendation,
       products: result.products,
     });
-
   } catch (error) {
-
     console.error(error);
 
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };

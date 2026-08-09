@@ -54,10 +54,6 @@ Return ONLY valid JSON in this format:
     return JSON.parse(cleanText);
 
   } catch (error) {
-
-    console.log("Comparison Agent Error");
-    console.log(error);
-
     // -------------------------------
     // Fallback Comparison
     // -------------------------------
