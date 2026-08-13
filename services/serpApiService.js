@@ -9,7 +9,6 @@ const searchProducts = async (keyword) => {
           engine: "google_shopping",
           q: keyword,
 
-          // 🇮🇳 India localization
           location: "India",
           google_domain: "google.co.in",
           gl: "in",

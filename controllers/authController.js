@@ -2,7 +2,6 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const generateToken = require("../utils/generateToken");
 
-// Register User
 exports.registerUser = async (req, res) => {
   try {
 
@@ -54,8 +53,6 @@ exports.registerUser = async (req, res) => {
 
   }
 };
-
-// Login User
 
 exports.loginUser = async (req, res) => {
 

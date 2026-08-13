@@ -1,11 +1,10 @@
 const comparisonAgent = require("../agents/comparisonAgent");
 
-// POST /api/products/compare
 exports.compareProducts = async (req, res) => {
   try {
     const { products } = req.body;
 
-    // Validation
+    
     if (!products || !Array.isArray(products)) {
       return res.status(400).json({
         success: false,
@@ -27,7 +26,6 @@ exports.compareProducts = async (req, res) => {
       });
     }
 
-    // AI Comparison
     const comparison = await comparisonAgent(products);
 
     res.status(200).json({

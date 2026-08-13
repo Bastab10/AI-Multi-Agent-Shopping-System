@@ -54,9 +54,7 @@ Return ONLY valid JSON in this format:
     return JSON.parse(cleanText);
 
   } catch (error) {
-    // -------------------------------
-    // Fallback Comparison
-    // -------------------------------
+    
 
     const sortedByRating = [...products].sort(
       (a, b) => (b.rating || 0) - (a.rating || 0)

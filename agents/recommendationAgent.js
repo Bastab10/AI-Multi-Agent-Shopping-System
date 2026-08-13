@@ -25,18 +25,14 @@ const recommendationAgent = async (products) => {
     };
   }
 
-  // Highest Rated Product
-  // Highest Rated Product
   const bestOverall = [...products].sort(
     (a, b) => (b.rating || 0) - (a.rating || 0),
   )[0];
 
-  // Lowest Price Product
   const bestBudget = [...products].sort(
     (a, b) => getPrice(a.price) - getPrice(b.price),
   )[0];
 
-  // Highest Price Product
   const premiumChoice = [...products].sort(
     (a, b) => getPrice(b.price) - getPrice(a.price),
   )[0];

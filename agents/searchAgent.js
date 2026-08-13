@@ -8,7 +8,7 @@ const searchAgent = async (userQuery) => {
     try {
         keyword = await generateSearchKeyword(userQuery);
     } catch (error) {
-        keyword = userQuery;   // fallback
+        keyword = userQuery;
     }
 
     const products = await searchProducts(keyword);

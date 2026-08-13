@@ -1,14 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 
-// Load .env FIRST
 dotenv.config();
 
 const cors = require("cors");
 const connectDB = require("./config/db");
 require("./config/passport");
 
-// Routes
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
@@ -47,8 +45,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
 
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: false,
       sameSite: "lax",
@@ -59,7 +57,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/wishlist", wishlistRoutes);

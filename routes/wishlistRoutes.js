@@ -11,16 +11,16 @@ const {
 
 const protect = require("../middleware/authMiddleware");
 
-// Add Product
+router.post("/", protect, addToWishlist);
+router.get("/", protect, getWishlist);
+router.delete("/:id", protect, removeWishlistItem);
+router.delete("/", protect, clearWishlist);
 router.post("/", protect, addToWishlist);
 
-// Get Wishlist
 router.get("/", protect, getWishlist);
 
-// Remove One Product
 router.delete("/:id", protect, removeWishlistItem);
 
-// Clear Wishlist
 router.delete("/", protect, clearWishlist);
 
 module.exports = router;

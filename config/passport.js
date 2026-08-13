@@ -15,11 +15,9 @@ passport.use(
       try {
         const email = profile.emails[0].value;
 
-        // Check if user already exists
         let user = await User.findOne({ email });
 
         if (user) {
-          // Link Google account if not linked
           if (!user.googleId) {
             user.googleId = profile.id;
             user.provider = "google";
@@ -29,11 +27,10 @@ passport.use(
           return done(null, user);
         }
 
-        // Create new Google user
         user = await User.create({
           name: profile.displayName,
           email,
-          password: "",          // Required if password field exists
+          password: "",
           googleId: profile.id,
           provider: "google",
         });
@@ -48,12 +45,10 @@ passport.use(
   )
 );
 
-// Serialize User
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// Deserialize User
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);

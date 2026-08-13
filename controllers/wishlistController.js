@@ -1,9 +1,5 @@
 const Wishlist = require("../models/Wishlist");
 
-// =========================
-// Add Product to Wishlist
-// POST /api/wishlist
-// =========================
 exports.addToWishlist = async (req, res) => {
   try {
     const {
@@ -16,7 +12,7 @@ exports.addToWishlist = async (req, res) => {
       link,
     } = req.body;
 
-    // Check if already exists
+    
     const exists = await Wishlist.findOne({
       user: req.user._id,
       productId,
@@ -53,10 +49,6 @@ exports.addToWishlist = async (req, res) => {
   }
 };
 
-// =========================
-// Get Wishlist
-// GET /api/wishlist
-// =========================
 exports.getWishlist = async (req, res) => {
   try {
     const wishlist = await Wishlist.find({
@@ -78,10 +70,6 @@ exports.getWishlist = async (req, res) => {
   }
 };
 
-// =========================
-// Remove One Product
-// DELETE /api/wishlist/:id
-// =========================
 exports.removeWishlistItem = async (req, res) => {
   try {
     const item = await Wishlist.findOne({
@@ -110,10 +98,6 @@ exports.removeWishlistItem = async (req, res) => {
   }
 };
 
-// =========================
-// Clear Wishlist
-// DELETE /api/wishlist
-// =========================
 exports.clearWishlist = async (req, res) => {
   try {
     await Wishlist.deleteMany({

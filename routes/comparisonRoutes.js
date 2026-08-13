@@ -8,7 +8,6 @@ const {
 
 const protect = require("../middleware/authMiddleware");
 
-// Compare Products
 router.post("/", protect, compareProducts);
 
 module.exports = router;
