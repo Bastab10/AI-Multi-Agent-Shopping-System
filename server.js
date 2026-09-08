@@ -21,7 +21,7 @@ const app = express();
 
 const allowedOrigins = [
   // "http://localhost:5173",
-  "https://ai-multi-agent-shopping-system.onrender.com",
+  "https://shopintel26.bastabsaikiabs10.workers.dev",
 ];
 
 app.use(
@@ -46,7 +46,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
 
-      cookie: {
+    cookie: {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: false,
@@ -72,5 +72,4 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  
 });
