@@ -6,6 +6,10 @@ const ai = new GoogleGenAI({
 
 const comparisonAgent = async (products) => {
   try {
+    if (!products || products.length < 2) {
+      return null;
+    }
+
     const shortProducts = products.map((product) => ({
       title: product.title,
       price: product.price,
@@ -20,12 +24,16 @@ Compare the following products:
 
 ${JSON.stringify(shortProducts, null, 2)}
 
-Analyze them based on:
+Analyze them based ONLY on the provided product data.
+
+Consider:
 - Price
 - Rating
 - Reviews
 
-Return ONLY valid JSON in this format:
+Do NOT invent specifications or information.
+
+Return ONLY valid JSON in this exact format:
 
 {
   "winner": "",
@@ -37,8 +45,11 @@ Return ONLY valid JSON in this format:
 `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-3.5-flash-lite",
       contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+      },
     });
 
     const text =
@@ -54,7 +65,14 @@ Return ONLY valid JSON in this format:
     return JSON.parse(cleanText);
 
   } catch (error) {
-    
+    console.error(
+      "Comparison Agent Error:",
+      error.message
+    );
+
+    if (!products || products.length < 2) {
+      return null;
+    }
 
     const sortedByRating = [...products].sort(
       (a, b) => (b.rating || 0) - (a.rating || 0)
@@ -71,7 +89,8 @@ Return ONLY valid JSON in this format:
     };
 
     const bestValue = [...products].sort(
-      (a, b) => getPrice(a.price) - getPrice(b.price)
+      (a, b) =>
+        getPrice(a.price) - getPrice(b.price)
     )[0];
 
     return {
@@ -81,14 +100,15 @@ Return ONLY valid JSON in this format:
 
       pros: [
         `${winner.title} has the highest customer rating.`,
-        `${bestValue.title} offers the best value for money.`,
+        `${bestValue.title} offers the lowest price among the selected products.`,
       ],
 
       cons: [
-        "AI comparison unavailable.",
+        "AI comparison was unavailable, so the result is based on price and rating.",
       ],
 
-      summary: `${winner.title} is the best overall product based on customer ratings, while ${bestValue.title} is the most budget-friendly option among the selected products.`,
+      summary:
+        `${winner.title} is the best overall product based on customer rating, while ${bestValue.title} is the most budget-friendly option among the selected products.`,
     };
   }
 };

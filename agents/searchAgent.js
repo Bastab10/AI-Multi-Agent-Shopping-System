@@ -1,8 +1,7 @@
-const generateSearchKeyword = require("../services/geminiService");
+const { generateSearchKeyword } = require("../services/geminiService");
 const searchProducts = require("../services/serpApiService");
 
 const searchAgent = async (userQuery) => {
-
     let keyword;
 
     try {

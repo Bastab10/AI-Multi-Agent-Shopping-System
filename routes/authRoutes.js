@@ -24,6 +24,8 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     failureRedirect: "https://shopintel26.bastabsaikiabs10.workers.dev/login",
+    
+
     session: false,
   }),
   async (req, res) => {

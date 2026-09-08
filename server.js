@@ -11,6 +11,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const comparisonRoutes = require("./routes/comparisonRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const passport = require("passport");
 const session = require("express-session");
 
@@ -19,8 +20,8 @@ connectDB();
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://shopintel26.bastabsaikiabs10.workers.dev",
+  // "http://localhost:5173",
+  "https://ai-multi-agent-shopping-system.onrender.com",
 ];
 
 app.use(
@@ -61,6 +62,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/comparison", comparisonRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("AI Multi Agent Shopping API Running...");
@@ -70,4 +72,5 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  
 });
