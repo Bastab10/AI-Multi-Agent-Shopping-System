@@ -18,8 +18,7 @@ const shoppingAgent = async (conversationHistory = []) => {
       requirements.budget !== "";
 
     const hasUseCase =
-      Array.isArray(requirements.useCase) &&
-      requirements.useCase.length > 0;
+      Array.isArray(requirements.useCase) && requirements.useCase.length > 0;
 
     const hasBrand =
       typeof requirements.brand === "string" &&
@@ -35,13 +34,7 @@ const shoppingAgent = async (conversationHistory = []) => {
 
     const enoughInformation =
       hasCategory &&
-      (
-        hasBudget ||
-        hasUseCase ||
-        hasBrand ||
-        hasFeatures ||
-        hasPriority
-      );
+      (hasBudget || hasUseCase || hasBrand || hasFeatures || hasPriority);
 
     if (!aiResult.searchRequired || !enoughInformation) {
       return {
@@ -80,9 +73,7 @@ const shoppingAgent = async (conversationHistory = []) => {
     }
 
     if (hasFeatures) {
-      searchParts.push(
-        requirements.importantFeatures.join(" ")
-      );
+      searchParts.push(requirements.importantFeatures.join(" "));
     }
 
     if (hasPriority) {
@@ -93,15 +84,11 @@ const shoppingAgent = async (conversationHistory = []) => {
       searchParts.push(`under ₹${requirements.budget}`);
     }
 
-    const keyword = searchParts
-      .filter(Boolean)
-      .join(" ")
-      .trim();
+    const keyword = searchParts.filter(Boolean).join(" ").trim();
 
     if (!keyword) {
       return {
-        reply:
-          "I need a little more information before I search for products.",
+        reply: "I need a little more information before I search for products.",
 
         intent: "shopping",
 
@@ -131,8 +118,7 @@ const shoppingAgent = async (conversationHistory = []) => {
 
     return {
       reply:
-        aiResult.reply ||
-        "I found some products that match your requirements.",
+        aiResult.reply || "I found some products that match your requirements.",
 
       intent: aiResult.intent || "shopping",
 
@@ -151,7 +137,7 @@ const shoppingAgent = async (conversationHistory = []) => {
   } catch (error) {
     console.error("Shopping Agent Error:", error);
 
-    throw new Error("Shopping Agent Error");
+    throw error;
   }
 };
 
