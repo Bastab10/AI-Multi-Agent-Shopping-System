@@ -20,8 +20,8 @@ connectDB();
 const app = express();
 
 const allowedOrigins = [
-  // "http://localhost:5173",
-  "https://shopintel26.bastabsaikiabs10.workers.dev",
+  "http://localhost:5173",
+  // "https://shopintel26.bastabsaikiabs10.workers.dev",
 ];
 
 app.use(
