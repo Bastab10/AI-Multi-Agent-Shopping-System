@@ -22,7 +22,7 @@ const app = express();
 
 const allowedOrigins = [
   "https://shopintel.bastabsaikia.in",
-  "https://shopintel26.bastabsaikiabs10.workers.dev",
+  // "https://shopintel26.bastabsaikiabs10.workers.dev",
   "http://localhost:5173",
   "http://localhost:3000",
 ];

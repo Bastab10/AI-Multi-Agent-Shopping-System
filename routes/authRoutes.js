@@ -20,7 +20,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "https://shopintel26.bastabsaikiabs10.workers.dev/login",
+    failureRedirect: "https://shopintel.bastabsaikia.in/login",
 
     session: false,
   }),
@@ -35,12 +35,11 @@ router.get(
       };
 
       const encodedUser = encodeURIComponent(JSON.stringify(user));
-
       res.redirect(
-        `https://shopintel26.bastabsaikiabs10.workers.dev/auth-success?token=${token}&user=${encodedUser}`,
+        `https://shopintel.bastabsaikia.in/auth-success?token=${token}&user=${encodedUser}`,
       );
     } catch (err) {
-      res.redirect("https://shopintel26.bastabsaikiabs10.workers.dev/login");
+      res.redirect("https://shopintel.bastabsaikia.in/login");
     }
   },
 );
